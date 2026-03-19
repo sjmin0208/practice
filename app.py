@@ -15,367 +15,175 @@ st.set_page_config(
 # ── 커스텀 CSS ────────────────────────────────────────────────
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
-
-    :root {
-        --bg-primary:    #0d1117;
-        --bg-secondary:  #161b22;
-        --bg-card:       #1c2230;
-        --bg-card-hover: #212836;
-        --border:        #2a3547;
-        --border-bright: #3d5a8a;
-        --accent-1:      #3b82f6;
-        --accent-2:      #60a5fa;
-        --accent-3:      #93c5fd;
-        --accent-glow:   rgba(59,130,246,0.25);
-        --text-primary:  #e8edf5;
-        --text-secondary:#8b9ab8;
-        --text-muted:    #4e6080;
-        --red:           #f87171;
-        --green:         #34d399;
-        --yellow:        #fbbf24;
-        --font-main:     'Pretendard', 'Noto Sans KR', sans-serif;
-        --font-mono:     'DM Mono', monospace;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
 
     html, body, [class*="css"] {
-        font-family: var(--font-main);
-        background-color: var(--bg-primary);
-        color: var(--text-primary);
+        font-family: 'Noto Sans KR', sans-serif;
+        background-color: #ffffff;
     }
-
-    .stApp {
-        background-color: var(--bg-primary);
-    }
+    .stApp { background-color: #ffffff; }
 
     /* ── 사이드바 ── */
     section[data-testid="stSidebar"] {
-        background: var(--bg-secondary) !important;
-        border-right: 1px solid var(--border) !important;
+        background: #f7fbff;
+        border-right: 2px solid #dbeafe;
     }
     section[data-testid="stSidebar"] .stMarkdown p,
     section[data-testid="stSidebar"] .stMarkdown li,
     section[data-testid="stSidebar"] label,
     section[data-testid="stSidebar"] .stSelectbox label,
     section[data-testid="stSidebar"] .stMultiSelect label {
-        color: var(--text-secondary) !important;
-        font-size: 0.85rem !important;
+        color: #1e3a5f !important;
         font-weight: 500;
     }
-    section[data-testid="stSidebar"] .stMarkdown th,
-    section[data-testid="stSidebar"] .stMarkdown td {
-        color: var(--text-secondary) !important;
-        border-color: var(--border) !important;
-        font-size: 0.78rem !important;
-    }
-
-    /* ── 멀티셀렉트 / 셀렉트박스 다크 ── */
-    .stMultiSelect > div > div,
-    .stSelectbox > div > div {
-        background-color: var(--bg-card) !important;
-        border-color: var(--border) !important;
-        color: var(--text-primary) !important;
-    }
-    .stTextInput > div > div {
-        background-color: var(--bg-card) !important;
-        border-color: var(--border) !important;
-        color: var(--text-primary) !important;
-    }
-
-    /* ── 데이터프레임 ── */
-    .stDataFrame { background-color: var(--bg-card) !important; }
-    .stDataFrame thead th {
-        background-color: var(--bg-secondary) !important;
-        color: var(--accent-2) !important;
-        font-weight: 700 !important;
-        border-bottom: 1px solid var(--border-bright) !important;
-        font-size: 0.8rem !important;
-        letter-spacing: 0.04em !important;
-        text-transform: uppercase !important;
-    }
-    .stDataFrame tbody tr:hover { background-color: var(--bg-card-hover) !important; }
 
     /* ── KPI 카드 ── */
     .kpi-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 20px 16px;
+        background: #ffffff;
+        border: 2px solid #bfdbfe;
+        border-radius: 16px;
+        padding: 18px 12px;
         text-align: center;
-        position: relative;
-        overflow: hidden;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 12px rgba(59,130,246,0.10);
+        transition: box-shadow 0.2s;
     }
-    .kpi-card::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, var(--accent-1), transparent);
-    }
-    .kpi-card:hover {
-        border-color: var(--border-bright);
-        box-shadow: 0 0 24px var(--accent-glow);
-    }
-    .kpi-card .value {
-        font-size: 1.8rem;
-        font-weight: 800;
-        color: var(--text-primary);
-        letter-spacing: -0.02em;
-        font-variant-numeric: tabular-nums;
-        font-family: var(--font-mono);
-    }
-    .kpi-card .label {
-        font-size: 0.75rem;
-        color: var(--text-secondary);
-        margin-top: 6px;
-        font-weight: 500;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-    }
-    .kpi-card .unit {
-        font-size: 0.65rem;
-        color: var(--accent-1);
-        margin-top: 3px;
-        font-family: var(--font-mono);
-    }
+    .kpi-card:hover { box-shadow: 0 6px 20px rgba(59,130,246,0.18); }
+    .kpi-card .value { font-size: 1.75rem; font-weight: 700; color: #1d4ed8; }
+    .kpi-card .label { font-size: 0.82rem; color: #64748b; margin-top: 4px; font-weight: 500; }
+    .kpi-card .unit  { font-size: 0.72rem; color: #93c5fd; margin-top: 2px; }
 
     /* ── 섹션 타이틀 ── */
     .section-title {
-        font-size: 0.78rem;
+        font-size: 1.1rem;
         font-weight: 700;
-        color: var(--text-secondary);
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        padding: 0 0 12px 0;
-        margin: 28px 0 16px;
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .section-title::before {
-        content: '';
-        display: inline-block;
-        width: 3px;
-        height: 14px;
-        background: var(--accent-1);
-        border-radius: 2px;
+        color: #1e3a5f;
+        border-left: 5px solid #3b82f6;
+        padding: 4px 0 4px 12px;
+        margin: 28px 0 14px;
+        background: linear-gradient(90deg, #eff6ff 0%, transparent 100%);
     }
 
     /* ── 정보 박스 ── */
     .info-box {
-        background: rgba(59,130,246,0.06);
-        border-radius: 8px;
+        background: #eff6ff;
+        border-radius: 10px;
         padding: 12px 16px;
-        font-size: 0.83rem;
-        color: var(--text-secondary);
-        border: 1px solid rgba(59,130,246,0.2);
+        font-size: 0.88rem;
+        color: #1e40af;
+        border-left: 5px solid #3b82f6;
         margin-bottom: 20px;
-        line-height: 1.7;
+        line-height: 1.6;
     }
-    .info-box b { color: var(--accent-2); font-weight: 600; }
     .warn-box {
-        background: rgba(251,191,36,0.06);
-        border-radius: 8px;
+        background: #fefce8;
+        border-radius: 10px;
         padding: 12px 16px;
-        font-size: 0.83rem;
-        color: #c9a84c;
-        border: 1px solid rgba(251,191,36,0.2);
+        font-size: 0.88rem;
+        color: #92400e;
+        border-left: 5px solid #f59e0b;
         margin-bottom: 20px;
-        line-height: 1.7;
+        line-height: 1.6;
     }
-    .warn-box b { color: var(--yellow); font-weight: 600; }
 
-    /* ── 네비게이션 탭 버튼 ── */
+    /* ── 물방울 / 물결 네비게이션 버튼 ── */
     div[data-testid="stHorizontalBlock"] .stButton > button {
         width: 100%;
-        border-radius: 8px;
-        padding: 12px 8px;
-        font-size: 0.85rem;
+        border-radius: 50px;
+        padding: 14px 10px;
+        font-size: 0.97rem;
         font-weight: 600;
-        color: var(--text-secondary);
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        transition: all 0.2s ease;
-        letter-spacing: 0.02em;
-        font-family: var(--font-main);
+        color: #1d4ed8;
+        background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+        border: 2px solid #93c5fd;
+        box-shadow: 0 2px 8px rgba(59,130,246,0.12),
+                    inset 0 1px 0 rgba(255,255,255,0.8);
+        transition: all 0.25s ease;
+        letter-spacing: 0.01em;
+        position: relative;
+        overflow: hidden;
+    }
+    div[data-testid="stHorizontalBlock"] .stButton > button::before {
+        content: '';
+        position: absolute;
+        bottom: -6px; left: -10%;
+        width: 120%; height: 14px;
+        background: rgba(147,197,253,0.35);
+        border-radius: 50%;
+        filter: blur(3px);
     }
     div[data-testid="stHorizontalBlock"] .stButton > button:hover {
-        background: var(--bg-card-hover) !important;
-        border-color: var(--accent-1) !important;
-        color: var(--accent-2) !important;
-        box-shadow: 0 0 16px var(--accent-glow) !important;
+        background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%) !important;
+        border-color: #3b82f6 !important;
+        color: #1e40af !important;
+        box-shadow: 0 6px 18px rgba(59,130,246,0.22),
+                    inset 0 1px 0 rgba(255,255,255,0.9) !important;
+        transform: translateY(-3px);
     }
-    div[data-testid="stHorizontalBlock"] .stButton > button:focus,
-    div[data-testid="stHorizontalBlock"] .stButton > button:active {
-        background: rgba(59,130,246,0.12) !important;
-        color: var(--accent-2) !important;
-        border-color: var(--accent-1) !important;
+    div[data-testid="stHorizontalBlock"] .stButton > button:active,
+    div[data-testid="stHorizontalBlock"] .stButton > button:focus {
+        background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%) !important;
+        color: #ffffff !important;
+        border-color: #1d4ed8 !important;
+        box-shadow: 0 2px 8px rgba(29,78,216,0.30) !important;
+        transform: translateY(0px);
     }
 
     /* ── 정책 카드 ── */
     .policy-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 24px 18px;
+        background: #ffffff;
+        border: 2px solid #bfdbfe;
+        border-radius: 16px;
+        padding: 22px 16px;
         text-align: center;
-        position: relative;
-        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(59,130,246,0.10);
     }
-    .policy-card::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 12px;
-        background: radial-gradient(ellipse at top, rgba(59,130,246,0.06) 0%, transparent 70%);
-        pointer-events: none;
-    }
-    .policy-card .pval   {
-        font-size: 2.2rem;
-        font-weight: 800;
-        color: var(--accent-2);
-        font-family: var(--font-mono);
-        letter-spacing: -0.02em;
-    }
-    .policy-card .ptitle { font-size: 0.88rem; color: var(--text-primary); margin-top: 8px; font-weight: 600; }
-    .policy-card .pdesc  { font-size: 0.76rem; color: var(--text-secondary); margin-top: 6px; font-family: var(--font-mono); }
+    .policy-card .pval   { font-size: 2rem; font-weight: 700; color: #1d4ed8; }
+    .policy-card .ptitle { font-size: 0.92rem; color: #475569; margin-top: 6px; font-weight: 600; }
+    .policy-card .pdesc  { font-size: 0.80rem; color: #64748b; margin-top: 6px; }
     .policy-card .pstat  {
-        font-size: 0.72rem; color: var(--green); margin-top: 12px;
-        background: rgba(52,211,153,0.08);
-        border-radius: 20px;
+        font-size: 0.75rem; color: #1d4ed8; margin-top: 10px;
+        background: #eff6ff; border-radius: 20px;
         padding: 4px 12px; display: inline-block;
-        border: 1px solid rgba(52,211,153,0.25);
+        border: 1px solid #bfdbfe;
     }
 
     /* ── 현재 화면 배지 ── */
     .active-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(59,130,246,0.1);
-        color: var(--accent-2);
-        font-size: 0.78rem;
+        display: inline-block;
+        background: #eff6ff;
+        color: #1d4ed8;
+        font-size: 0.85rem;
         font-weight: 600;
-        border-radius: 6px;
-        padding: 5px 14px;
-        border: 1px solid rgba(59,130,246,0.25);
+        border-radius: 20px;
+        padding: 5px 16px;
+        border: 1.5px solid #93c5fd;
         margin-bottom: 6px;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
     }
 
     /* ── 다운로드 버튼 ── */
     .stDownloadButton > button {
-        background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 8px !important;
-        font-weight: 600 !important;
+        background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+        color: white !important; border: none !important;
+        border-radius: 10px !important; font-weight: 600 !important;
         padding: 10px 20px !important;
-        letter-spacing: 0.02em !important;
-    }
-    .stDownloadButton > button:hover {
-        box-shadow: 0 0 20px var(--accent-glow) !important;
     }
 
-    /* ── 헤더 ── */
-    .dash-header {
-        padding: 8px 0 24px;
+    /* ── 데이터프레임 헤더 ── */
+    .dataframe thead th {
+        background-color: #eff6ff !important;
+        color: #1e3a5f !important;
+        font-weight: 700 !important;
     }
-    .dash-header h1 {
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: var(--text-primary);
-        letter-spacing: -0.03em;
-        margin: 0;
-    }
-    .dash-header .subtitle {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        font-family: var(--font-mono);
-        letter-spacing: 0.06em;
-        margin-top: 4px;
-    }
-    .dash-header .dot {
-        display: inline-block;
-        width: 7px; height: 7px;
-        background: var(--green);
-        border-radius: 50%;
-        margin-right: 6px;
-        animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.4; }
-    }
-
-    /* ── 구분선 ── */
-    hr { border-color: var(--border) !important; margin: 16px 0 !important; }
 
     /* ── 푸터 ── */
     .footer {
-        text-align: center;
-        color: var(--text-muted);
-        font-size: 0.72rem;
-        padding: 20px 0 8px;
-        border-top: 1px solid var(--border);
-        margin-top: 16px;
-        font-family: var(--font-mono);
-        letter-spacing: 0.04em;
+        text-align: center; color: #94a3b8;
+        font-size: 0.80rem; padding: 20px 0 8px;
+        border-top: 1px solid #e2e8f0; margin-top: 10px;
     }
 
-    /* ── 사이드바 브랜드 ── */
-    .sidebar-brand {
-        padding: 4px 0 16px;
-    }
-    .sidebar-brand .logo-text {
-        font-size: 1.05rem;
-        font-weight: 800;
-        color: var(--text-primary);
-        letter-spacing: -0.01em;
-    }
-    .sidebar-brand .logo-sub {
-        font-size: 0.7rem;
-        color: var(--text-muted);
-        font-family: var(--font-mono);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-top: 2px;
-    }
-
-    /* ── 태그 칩 ── */
-    .tag-chip {
-        display: inline-block;
-        background: rgba(59,130,246,0.1);
-        color: var(--accent-2);
-        font-size: 0.68rem;
-        font-family: var(--font-mono);
-        padding: 2px 8px;
-        border-radius: 4px;
-        border: 1px solid rgba(59,130,246,0.2);
-        margin: 1px;
-    }
-
-    /* ── 순위 테이블 라벨 ── */
-    .rank-label-top {
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--red);
-        margin-bottom: 6px;
-    }
-    .rank-label-bot {
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--green);
-        margin-bottom: 6px;
-    }
-
+    /* ── 구분선 ── */
+    hr { border-color: #e2e8f0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -452,40 +260,48 @@ def load_policy_data():
 df        = load_data()
 df_policy = load_policy_data()
 
-# ── 다크 테마 플롯 공통 설정 ──
 PLOT_BASE = dict(
-    plot_bgcolor="#1c2230",
-    paper_bgcolor="#1c2230",
-    font=dict(family="Pretendard, Noto Sans KR, sans-serif", color="#8b9ab8", size=11),
+    plot_bgcolor="#ffffff",
+    paper_bgcolor="#ffffff",
+    font=dict(family="Noto Sans KR", color="#1e3a5f", size=12),
     margin=dict(t=50, b=40, l=50, r=20),
 )
-GRID_COLOR  = "#2a3547"
-ACCENT_BLUE = ["#1d4ed8","#2563eb","#3b82f6","#60a5fa","#93c5fd","#bfdbfe"]
+BLUES = ["#1d4ed8","#2563eb","#3b82f6","#60a5fa","#93c5fd","#bfdbfe"]
+
+# 서울 25개 자치구 중심 좌표
+DISTRICT_COORDS = {
+    "강남구":   (37.5172, 127.0473), "강동구":   (37.5301, 127.1238),
+    "강북구":   (37.6396, 127.0256), "강서구":   (37.5509, 126.8495),
+    "관악구":   (37.4784, 126.9516), "광진구":   (37.5385, 127.0823),
+    "구로구":   (37.4955, 126.8875), "금천구":   (37.4569, 126.8955),
+    "노원구":   (37.6542, 127.0568), "도봉구":   (37.6688, 127.0471),
+    "동대문구": (37.5744, 127.0396), "동작구":   (37.5124, 126.9393),
+    "마포구":   (37.5638, 126.9084), "서대문구": (37.5791, 126.9368),
+    "서초구":   (37.4837, 127.0324), "성동구":   (37.5633, 127.0369),
+    "성북구":   (37.5894, 127.0167), "송파구":   (37.5145, 127.1059),
+    "양천구":   (37.5170, 126.8664), "영등포구": (37.5263, 126.8963),
+    "용산구":   (37.5311, 126.9810), "은평구":   (37.6027, 126.9291),
+    "종로구":   (37.5735, 126.9790), "중구":     (37.5641, 126.9979),
+    "중랑구":   (37.6063, 127.0927),
+}
+
 
 
 # ══════════════════════════════════════════════════
 # 사이드바
 # ══════════════════════════════════════════════════
 with st.sidebar:
-    st.markdown(
-        '<div class="sidebar-brand">'
-        '<div class="logo-text">💧 수질 분석</div>'
-        '<div class="logo-sub">Seoul Water Quality · 2026</div>'
-        '</div>',
-        unsafe_allow_html=True
-    )
+    st.markdown("## 💧 서울시 수질 분석")
+    st.caption("Seoul Water Quality Dashboard")
     st.markdown("---")
 
-    st.markdown(
-        '<span class="tag-chip">📅 2026.03.19</span> '
-        '<span class="tag-chip">05~10시</span><br>'
-        '<span class="tag-chip">25개 자치구</span> '
-        '<span class="tag-chip">2,535건</span>',
-        unsafe_allow_html=True
-    )
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("**📅 측정 기간**")
+    st.markdown("2026.03.19 &nbsp; 05시 ~ 10시")
+    st.markdown("**📍 대상**")
+    st.markdown("서울 25개 자치구 · 2,535건")
+    st.markdown("---")
 
-    st.markdown("**데이터 필터**")
+    st.markdown("#### 🔎 데이터 필터")
     sel_districts = st.multiselect(
         "자치구 선택", sorted(df["구명"].unique()), default=[]
     )
@@ -495,20 +311,21 @@ with st.sidebar:
         format_func=lambda x: f"{x}시"
     )
     sel_metric = st.selectbox(
-        "주요 지표",
+        "📊 주요 지표",
         ["탁도", "잔류염소", "pH", "전기전도도", "수온", "수은농도"]
     )
 
     st.markdown("---")
-    st.markdown("**먹는물 수질 기준** *(환경부)*")
+    st.markdown("#### 📋 먹는물 수질 기준")
     st.markdown("""
-| 항목 | 기준 | 단위 |
-|------|------|------|
+| 항목 | 기준값 | 단위 |
+|------|--------|------|
 | pH | 5.8 ~ 8.5 | — |
 | 탁도 | ≤ 0.5 | NTU |
 | 잔류염소 | 0.1 ~ 4.0 | mg/L |
 | 수은 | ≤ 0.001 | mg/L |
 """)
+    st.caption("※ 환경부고시 기준")
 
 
 # ══════════════════════════════════════════════════
@@ -522,18 +339,11 @@ if sel_hours:     df_f = df_f[df_f["측정시각"].isin(sel_hours)]
 # ══════════════════════════════════════════════════
 # 헤더
 # ══════════════════════════════════════════════════
-st.markdown(
-    '<div class="dash-header">'
-    '<h1>서울특별시 수질 분석 대시보드</h1>'
-    '<div class="subtitle"><span class="dot"></span>LIVE · Seoul Water Quality Intelligence Platform · 2026.03.19</div>'
-    '</div>',
-    unsafe_allow_html=True
-)
-
+st.markdown("# 💧 서울특별시 수질 분석 대시보드")
 st.markdown(
     '<div class="info-box">'
-    '📌 <b>서울시 수질오염 현황 분석 및 정책 실효성 평가 보고서</b>(2026.03.19) 기반 대시보드 · '
-    '분석 항목: pH, 탁도, 잔류염소, 전기전도도, 수온, 수은농도'
+    '📌 <b>서울시 수질오염 현황 분석 및 정책 실효성 평가 보고서</b>(2026.03.19) 기반 대시보드입니다. '
+    '측정 기간: 2026년 3월 19일 05~10시 · 분석 항목: pH, 탁도, 잔류염소, 전기전도도, 수온, 수은농도'
     '</div>',
     unsafe_allow_html=True
 )
@@ -543,18 +353,18 @@ st.markdown(
 # ══════════════════════════════════════════════════
 kpi_cols = st.columns(5)
 kpis = [
-    ("2,535",                              "총 측정 건수",  "건"),
-    (f"{df_f['탁도'].mean():.3f}",         "평균 탁도",     "NTU"),
-    (f"{df_f['잔류염소'].mean():.3f}",     "평균 잔류염소", "mg/L"),
-    (f"{df_f['pH'].mean():.2f}",           "평균 pH",       "—"),
-    (f"{df_f['수온'].mean():.1f}",         "평균 수온",     "℃"),
+    ("2,535건",                        "총 측정 건수",  ""),
+    (f"{df_f['탁도'].mean():.3f}",     "평균 탁도",     "NTU"),
+    (f"{df_f['잔류염소'].mean():.3f}", "평균 잔류염소", "mg/L"),
+    (f"{df_f['pH'].mean():.2f}",       "평균 pH",       ""),
+    (f"{df_f['수온'].mean():.1f}",     "평균 수온",     "℃"),
 ]
 for col, (val, label, unit) in zip(kpi_cols, kpis):
     col.markdown(
         f'<div class="kpi-card">'
         f'<div class="value">{val}</div>'
         f'<div class="label">{label}</div>'
-        f'<div class="unit">{unit}</div>'
+        f'<div class="unit">{unit if unit else "&nbsp;"}</div>'
         f'</div>',
         unsafe_allow_html=True
     )
@@ -562,16 +372,16 @@ for col, (val, label, unit) in zip(kpi_cols, kpis):
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════
-# 네비게이션 버튼
+# 물방울 / 물결 네비게이션 버튼
 # ══════════════════════════════════════════════════
 if "active_tab" not in st.session_state:
     st.session_state.active_tab = "지역별 분포"
 
 nav_items = [
-    ("💧  지역별 분포",     "지역별 분포"),
-    ("🌊  시간별 변화",     "시간별 변화"),
-    ("🏛  정책 전후 비교",  "정책 전후 비교"),
-    ("🗂  원본 데이터",     "원본 데이터"),
+    ("💧 지역별 분포",     "지역별 분포"),
+    ("🌊 시간별 변화",    "시간별 변화"),
+    ("🏛️ 정책 전후 비교", "정책 전후 비교"),
+    ("🗂️ 원본 데이터",    "원본 데이터"),
 ]
 nav_cols = st.columns(4)
 for col, (label, key) in zip(nav_cols, nav_items):
@@ -581,8 +391,9 @@ for col, (label, key) in zip(nav_cols, nav_items):
 
 active = st.session_state.active_tab
 
+# 현재 화면 배지
 st.markdown(
-    f'<div style="margin: 14px 0 0 2px;">'
+    f'<div style="margin: 12px 0 0 2px;">'
     f'<span class="active-badge">▶ {active}</span>'
     f'</div>',
     unsafe_allow_html=True
@@ -604,8 +415,8 @@ if active == "지역별 분포":
     q75 = dist_agg["평균"].quantile(0.75)
     q25 = dist_agg["평균"].quantile(0.25)
     bar_colors = [
-        "#f87171" if v > q75 else
-        "#34d399" if v < q25 else
+        "#ef4444" if v > q75 else
+        "#60a5fa" if v < q25 else
         "#3b82f6"
         for v in dist_agg["평균"]
     ]
@@ -613,60 +424,146 @@ if active == "지역별 분포":
     col_a, col_b = st.columns([3, 1])
 
     with col_a:
-        st.markdown(f'<div class="section-title">자치구별 {sel_metric} 평균 비교</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="section-title">자치구별 {sel_metric} 평균 비교</div>',
+                    unsafe_allow_html=True)
         fig = go.Figure(go.Bar(
             x=dist_agg["구명"],
             y=dist_agg["평균"],
             marker_color=bar_colors,
-            marker_line_color="rgba(0,0,0,0)",
             error_y=dict(type="data", array=dist_agg["표준편차"],
-                         visible=True, color="#3d5a8a", thickness=1.5),
-            hovertemplate="<b>%{x}</b><br>평균: %{y:.4f}<extra></extra>",
+                         visible=True, color="#93c5fd", thickness=1.5),
+            hovertemplate="<b>%{x}</b><br>평균: %{y:.4f}<br><extra></extra>",
         ))
         fig.update_layout(
-            height=380,
-            xaxis=dict(tickangle=-40, gridcolor=GRID_COLOR, title="", tickfont=dict(size=10)),
-            yaxis=dict(gridcolor=GRID_COLOR, title=sel_metric, tickfont=dict(size=10)),
+            height=400,
+            xaxis=dict(tickangle=-40, gridcolor="#f1f5f9", title=""),
+            yaxis=dict(gridcolor="#f1f5f9", title=sel_metric),
             **PLOT_BASE
         )
         st.plotly_chart(fig, use_container_width=True)
 
     with col_b:
-        st.markdown(f'<div class="section-title">구간별 순위</div>', unsafe_allow_html=True)
-        st.markdown('<div class="rank-label-top">▲ 상위 5 · 주의</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">순위</div>', unsafe_allow_html=True)
+        st.markdown("🔴 **상위 5 — 주의**")
         top5 = dist_agg.head(5)[["구명", "평균"]].copy()
         top5["평균"] = top5["평균"].round(4)
         st.dataframe(top5.set_index("구명"), use_container_width=True)
 
-        st.markdown('<div class="rank-label-bot" style="margin-top:20px;">▼ 하위 5 · 양호</div>', unsafe_allow_html=True)
+        st.markdown("<br>🔵 **하위 5 — 양호**", unsafe_allow_html=True)
         bot5 = dist_agg.tail(5)[["구명", "평균"]].copy()
         bot5["평균"] = bot5["평균"].round(4)
         st.dataframe(bot5.set_index("구명"), use_container_width=True)
 
-    st.markdown('<div class="section-title">항목별 분포 — Box Plot</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">항목별 분포 — Box Plot</div>',
+                unsafe_allow_html=True)
     fig2 = make_subplots(rows=1, cols=4,
                          subplot_titles=["탁도 (NTU)", "잔류염소 (mg/L)", "pH", "수온 (℃)"])
-    fill_colors = [
-        "rgba(248,113,113,0.12)",
-        "rgba(59,130,246,0.12)",
-        "rgba(52,211,153,0.12)",
-        "rgba(251,191,36,0.12)",
+    box_fill_colors = [
+        "rgba(29,78,216,0.15)",
+        "rgba(37,99,235,0.15)",
+        "rgba(59,130,246,0.15)",
+        "rgba(96,165,250,0.15)",
     ]
-    line_colors = ["#f87171", "#3b82f6", "#34d399", "#fbbf24"]
-    for i, (m, lc, fc) in enumerate(zip(["탁도", "잔류염소", "pH", "수온"], line_colors, fill_colors), 1):
+    for i, (m, c, fc) in enumerate(zip(["탁도", "잔류염소", "pH", "수온"], BLUES, box_fill_colors), 1):
         fig2.add_trace(
-            go.Box(y=df_f[m], name=m, marker_color=lc,
-                   line_color=lc, fillcolor=fc, showlegend=False,
-                   boxpoints="outliers", marker_size=3),
+            go.Box(y=df_f[m], name=m, marker_color=c,
+                   line_color=c, fillcolor=fc, showlegend=False),
             row=1, col=i
         )
-    fig2.update_layout(height=300, **PLOT_BASE)
-    fig2.update_xaxes(gridcolor=GRID_COLOR, showticklabels=False)
-    fig2.update_yaxes(gridcolor=GRID_COLOR, tickfont=dict(size=10))
-    for ann in fig2.layout.annotations:
-        ann.font.color = "#8b9ab8"
-        ann.font.size  = 11
+    fig2.update_layout(height=320, **PLOT_BASE)
+    fig2.update_xaxes(gridcolor="#f1f5f9", showticklabels=False)
+    fig2.update_yaxes(gridcolor="#f1f5f9")
     st.plotly_chart(fig2, use_container_width=True)
+
+    # ── 지도 시각화 ──────────────────────────────────────────
+    st.markdown('<div class="section-title">🗺️ 서울시 자치구별 수질 지도</div>',
+                unsafe_allow_html=True)
+
+    # 지도용 데이터 준비
+    map_df = dist_agg.copy()
+    map_df["lat"] = map_df["구명"].map(lambda x: DISTRICT_COORDS.get(x, (0,0))[0])
+    map_df["lon"] = map_df["구명"].map(lambda x: DISTRICT_COORDS.get(x, (0,0))[1])
+    map_df = map_df[map_df["lat"] != 0]
+
+    # 정규화된 버블 크기 (10~50)
+    vmin, vmax = map_df["평균"].min(), map_df["평균"].max()
+    if vmax > vmin:
+        map_df["bubble_size"] = 10 + 40 * (map_df["평균"] - vmin) / (vmax - vmin)
+    else:
+        map_df["bubble_size"] = 25
+
+    # 위험도 레이블
+    map_df["위험도"] = map_df["평균"].apply(
+        lambda v: "🔴 주의" if v > map_df["평균"].quantile(0.75)
+        else ("🔵 양호" if v < map_df["평균"].quantile(0.25) else "🟡 보통")
+    )
+
+    fig_map = go.Figure(go.Scattermapbox(
+        lat=map_df["lat"],
+        lon=map_df["lon"],
+        mode="markers+text",
+        marker=dict(
+            size=map_df["bubble_size"],
+            color=map_df["평균"],
+            colorscale=[
+                [0.0,  "#bfdbfe"],
+                [0.4,  "#3b82f6"],
+                [0.7,  "#1d4ed8"],
+                [1.0,  "#ef4444"],
+            ],
+            colorbar=dict(
+                title=dict(text=sel_metric, font=dict(size=12, color="#1e3a5f")),
+                thickness=14,
+                len=0.7,
+                bgcolor="rgba(255,255,255,0.85)",
+                bordercolor="#dbeafe",
+                borderwidth=1,
+            ),
+            opacity=0.82,
+            sizemode="diameter",
+        ),
+        text=map_df["구명"],
+        textfont=dict(size=10, color="#1e3a5f", family="Noto Sans KR"),
+        textposition="top center",
+        customdata=map_df[["평균", "건수", "위험도"]].values,
+        hovertemplate=(
+            "<b>%{text}</b><br>"
+            f"{sel_metric}: " + "%{customdata[0]:.4f}<br>"
+            "측정 건수: %{customdata[1]}건<br>"
+            "상태: %{customdata[2]}"
+            "<extra></extra>"
+        ),
+    ))
+
+    fig_map.update_layout(
+        mapbox=dict(
+            style="carto-positron",
+            center=dict(lat=37.5665, lon=126.9780),
+            zoom=10.2,
+        ),
+        height=520,
+        margin=dict(t=10, b=10, l=0, r=0),
+        paper_bgcolor="#ffffff",
+        font=dict(family="Noto Sans KR", color="#1e3a5f"),
+    )
+    st.plotly_chart(fig_map, use_container_width=True)
+
+    # 범례 설명
+    col_leg1, col_leg2, col_leg3 = st.columns(3)
+    col_leg1.markdown(
+        '<div class="info-box" style="text-align:center;">🔴 <b>주의</b><br>상위 25% — 오염도 높음</div>',
+        unsafe_allow_html=True)
+    col_leg2.markdown(
+        '<div style="background:#f0fdf4;border-left:5px solid #22c55e;border-radius:10px;'
+        'padding:12px 16px;font-size:0.88rem;color:#166534;text-align:center;">'
+        '🟡 <b>보통</b><br>중간 50% 구간</div>',
+        unsafe_allow_html=True)
+    col_leg3.markdown(
+        '<div style="background:#eff6ff;border-left:5px solid #60a5fa;border-radius:10px;'
+        'padding:12px 16px;font-size:0.88rem;color:#1e40af;text-align:center;">'
+        '🔵 <b>양호</b><br>하위 25% — 오염도 낮음</div>',
+        unsafe_allow_html=True)
+
 
 
 # ══════════════════════════════════════════════════
@@ -680,40 +577,42 @@ elif active == "시간별 변화":
     )
     x_vals = hourly["측정시각"].astype(str) + "시"
 
-    st.markdown('<div class="section-title">시간대별 수질 항목 추이</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">시간대별 수질 항목 추이</div>',
+                unsafe_allow_html=True)
 
     fig3 = make_subplots(
         rows=2, cols=2,
         subplot_titles=["잔류염소 (mg/L)", "탁도 (NTU)", "pH", "수온 (℃)"],
-        vertical_spacing=0.20, horizontal_spacing=0.10
+        vertical_spacing=0.18, horizontal_spacing=0.10
     )
-    metric_colors = {
-        "잔류염소": ("#3b82f6", "rgba(59,130,246,0.10)"),
-        "탁도":     ("#f87171", "rgba(248,113,113,0.10)"),
-        "pH":       ("#34d399", "rgba(52,211,153,0.10)"),
-        "수온":     ("#fbbf24", "rgba(251,191,36,0.10)"),
-    }
-    for (m, r, c) in [("잔류염소", 1, 1), ("탁도", 1, 2), ("pH", 2, 1), ("수온", 2, 2)]:
-        lc, fc = metric_colors[m]
+    fill_colors = [
+        "rgba(29,78,216,0.08)",
+        "rgba(59,130,246,0.08)",
+        "rgba(37,99,235,0.08)",
+        "rgba(96,165,250,0.08)",
+    ]
+    for (m, r, c), color, fcolor in zip(
+        [("잔류염소", 1, 1), ("탁도", 1, 2), ("pH", 2, 1), ("수온", 2, 2)],
+        ["#1d4ed8", "#3b82f6", "#2563eb", "#60a5fa"],
+        fill_colors,
+    ):
         fig3.add_trace(go.Scatter(
             x=x_vals, y=hourly[m],
             mode="lines+markers", name=m,
-            line=dict(color=lc, width=2.5),
-            marker=dict(size=8, color=lc,
-                        line=dict(color=PLOT_BASE["plot_bgcolor"], width=2)),
+            line=dict(color=color, width=2.5),
+            marker=dict(size=9, color=color,
+                        line=dict(color="white", width=2)),
             fill="tozeroy",
-            fillcolor=fc,
+            fillcolor=fcolor,
         ), row=r, col=c)
 
-    fig3.update_layout(height=460, showlegend=False, **PLOT_BASE)
-    fig3.update_xaxes(gridcolor=GRID_COLOR, tickfont=dict(size=10))
-    fig3.update_yaxes(gridcolor=GRID_COLOR, tickfont=dict(size=10))
-    for ann in fig3.layout.annotations:
-        ann.font.color = "#8b9ab8"
-        ann.font.size  = 11
+    fig3.update_layout(height=480, showlegend=False, **PLOT_BASE)
+    fig3.update_xaxes(gridcolor="#f1f5f9")
+    fig3.update_yaxes(gridcolor="#f1f5f9")
     st.plotly_chart(fig3, use_container_width=True)
 
-    st.markdown('<div class="section-title">시간대별 수치 요약표</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">시간대별 수치 요약표</div>',
+                unsafe_allow_html=True)
     display_hourly = hourly.rename(columns={"측정시각": "시각"}).copy()
     display_hourly["시각"] = display_hourly["시각"].astype(str) + "시"
     st.dataframe(
@@ -732,14 +631,14 @@ elif active == "정책 전후 비교":
 
     st.markdown(
         '<div class="warn-box">'
-        '⚠️ 아래 데이터는 2024년 <b>상수도 수질 안전관리 강화 대책</b> 효과 시뮬레이션을 위한 '
-        '<b>가상 데이터</b>입니다. 실제 효과 분석을 위해서는 실측 종단 데이터가 필요합니다.'
+        '⚠️ 아래 정책 비교 데이터는 2024년 <b>상수도 수질 안전관리 강화 대책</b> 효과 시뮬레이션을 위한 '
+        '<b>가상 데이터</b>입니다. 실제 효과 분석을 위해서는 실측 종단 데이터(longitudinal data)가 필요합니다.'
         '</div>',
         unsafe_allow_html=True
     )
 
-    st.markdown('<div class="section-title">Welch\'s t-검정 결과 요약</div>', unsafe_allow_html=True)
-
+    st.markdown('<div class="section-title">Welch\'s t-검정 결과 요약</div>',
+                unsafe_allow_html=True)
     for col, (title, change, values, stat) in zip(st.columns(3), [
         ("탁도 저감",     "↓ 45.1%", "0.1031 → 0.0566 NTU",    "t = 5.573"),
         ("잔류염소 강화", "↑ 44.7%", "0.2620 → 0.3790 mg/L",   "t = 4.971"),
@@ -750,7 +649,7 @@ elif active == "정책 전후 비교":
             f'<div class="pval">{change}</div>'
             f'<div class="ptitle">{title}</div>'
             f'<div class="pdesc">{values}</div>'
-            f'<div class="pstat">{stat} · p &lt; 0.01 ✓</div>'
+            f'<div class="pstat">{stat} &nbsp;·&nbsp; p &lt; 0.01 ✅</div>'
             f'</div>',
             unsafe_allow_html=True
         )
@@ -764,31 +663,33 @@ elif active == "정책 전후 비교":
     col_l, col_r = st.columns(2)
 
     with col_l:
-        st.markdown('<div class="section-title">정책 전후 그룹 비교</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">정책 전후 그룹 비교</div>',
+                    unsafe_allow_html=True)
         fig4 = go.Figure()
         fig4.add_trace(go.Bar(
             name="정책 이전 (2023)",
             x=before_df["구명"], y=before_df[pol_metric],
-            marker_color="#3d5a8a",
-            marker_line_color="rgba(0,0,0,0)",
+            marker_color="#93c5fd", marker_line_color="#60a5fa",
+            marker_line_width=1.2,
         ))
         fig4.add_trace(go.Bar(
             name="정책 이후 (2025)",
             x=after_df["구명"], y=after_df[pol_metric],
-            marker_color="#3b82f6",
-            marker_line_color="rgba(0,0,0,0)",
+            marker_color="#1d4ed8", marker_line_color="#1e40af",
+            marker_line_width=1.2,
         ))
         fig4.update_layout(
-            barmode="group", height=360,
-            xaxis=dict(tickangle=-30, gridcolor=GRID_COLOR, tickfont=dict(size=9)),
-            yaxis=dict(gridcolor=GRID_COLOR, title=pol_metric, tickfont=dict(size=10)),
-            legend=dict(orientation="h", y=1.12, font=dict(size=10), bgcolor="rgba(0,0,0,0)"),
+            barmode="group", height=380,
+            xaxis=dict(tickangle=-30, gridcolor="#f1f5f9"),
+            yaxis=dict(gridcolor="#f1f5f9", title=pol_metric),
+            legend=dict(orientation="h", y=1.12, font=dict(size=11)),
             **PLOT_BASE
         )
         st.plotly_chart(fig4, use_container_width=True)
 
     with col_r:
-        st.markdown('<div class="section-title">개선 산점도</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">개선 산점도</div>',
+                    unsafe_allow_html=True)
         merged = before_df[["구명", pol_metric]].merge(
             after_df[["구명", pol_metric]], on="구명", suffixes=("_이전", "_이후")
         )
@@ -797,7 +698,7 @@ elif active == "정책 전후 비교":
         fig5 = go.Figure()
         fig5.add_trace(go.Scatter(
             x=[mn, mx], y=[mn, mx], mode="lines",
-            line=dict(dash="dot", color="#2a3547", width=1.5),
+            line=dict(dash="dot", color="#93c5fd", width=1.5),
             name="변화 없음", showlegend=True
         ))
         fig5.add_trace(go.Scatter(
@@ -806,17 +707,17 @@ elif active == "정책 전후 비교":
             mode="markers+text",
             text=merged["구명"],
             textposition="top center",
-            textfont=dict(size=9, color="#8b9ab8"),
-            marker=dict(size=11, color="#3b82f6",
-                        line=dict(color=PLOT_BASE["plot_bgcolor"], width=2)),
+            textfont=dict(size=10, color="#1e3a5f"),
+            marker=dict(size=12, color="#3b82f6",
+                        line=dict(color="white", width=2)),
             hovertemplate="<b>%{text}</b><br>이전: %{x:.5f}<br>이후: %{y:.5f}<extra></extra>",
             name=pol_metric,
         ))
         fig5.update_layout(
-            height=360,
-            xaxis=dict(title="정책 이전", gridcolor=GRID_COLOR, tickfont=dict(size=10)),
-            yaxis=dict(title="정책 이후", gridcolor=GRID_COLOR, tickfont=dict(size=10)),
-            legend=dict(orientation="h", y=1.12, font=dict(size=10), bgcolor="rgba(0,0,0,0)"),
+            height=380,
+            xaxis=dict(title="정책 이전", gridcolor="#f1f5f9"),
+            yaxis=dict(title="정책 이후", gridcolor="#f1f5f9"),
+            legend=dict(orientation="h", y=1.12, font=dict(size=11)),
             **PLOT_BASE
         )
         st.caption("※ 대각선 아래 = 개선된 지점")
@@ -832,9 +733,8 @@ elif active == "원본 데이터":
     with col_info:
         st.markdown(
             f'<div class="kpi-card" style="max-width:180px;">'
-            f'<div class="value">{len(df_f):,}</div>'
+            f'<div class="value">{len(df_f):,}건</div>'
             f'<div class="label">현재 조회 건수</div>'
-            f'<div class="unit">건</div>'
             f'</div>',
             unsafe_allow_html=True
         )
@@ -846,11 +746,11 @@ elif active == "원본 데이터":
     st.dataframe(
         show_df.sort_values(["구명", "측정시각"]).reset_index(drop=True),
         use_container_width=True,
-        height=460,
+        height=480,
     )
 
     st.download_button(
-        label="⬇  CSV 다운로드",
+        label="⬇️  CSV 다운로드",
         data=show_df.to_csv(index=False, encoding="utf-8-sig"),
         file_name="seoul_water_quality.csv",
         mime="text/csv",
@@ -861,6 +761,6 @@ elif active == "원본 데이터":
 # 푸터
 # ══════════════════════════════════════════════════
 st.markdown(
-    "<p class='footer'>서울특별시 환경정책과 · POLY Analyst · 2026.03.19 · Seoul Water Quality Intelligence</p>",
+    "<p class='footer'>서울특별시 환경정책과 &nbsp;|&nbsp; POLY Analyst &nbsp;|&nbsp; 2026.03.19</p>",
     unsafe_allow_html=True
 )
