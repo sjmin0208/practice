@@ -440,10 +440,16 @@ if active == "지역별 분포":
                 unsafe_allow_html=True)
     fig2 = make_subplots(rows=1, cols=4,
                          subplot_titles=["탁도 (NTU)", "잔류염소 (mg/L)", "pH", "수온 (℃)"])
-    for i, (m, c) in enumerate(zip(["탁도", "잔류염소", "pH", "수온"], BLUES), 1):
+    box_fill_colors = [
+        "rgba(29,78,216,0.15)",
+        "rgba(37,99,235,0.15)",
+        "rgba(59,130,246,0.15)",
+        "rgba(96,165,250,0.15)",
+    ]
+    for i, (m, c, fc) in enumerate(zip(["탁도", "잔류염소", "pH", "수온"], BLUES, box_fill_colors), 1):
         fig2.add_trace(
             go.Box(y=df_f[m], name=m, marker_color=c,
-                   line_color=c, fillcolor=c + "33", showlegend=False),
+                   line_color=c, fillcolor=fc, showlegend=False),
             row=1, col=i
         )
     fig2.update_layout(height=320, **PLOT_BASE)
