@@ -471,9 +471,16 @@ elif active == "시간별 변화":
         subplot_titles=["잔류염소 (mg/L)", "탁도 (NTU)", "pH", "수온 (℃)"],
         vertical_spacing=0.18, horizontal_spacing=0.10
     )
-    for (m, r, c), color in zip(
+    fill_colors = [
+        "rgba(29,78,216,0.08)",
+        "rgba(59,130,246,0.08)",
+        "rgba(37,99,235,0.08)",
+        "rgba(96,165,250,0.08)",
+    ]
+    for (m, r, c), color, fcolor in zip(
         [("잔류염소", 1, 1), ("탁도", 1, 2), ("pH", 2, 1), ("수온", 2, 2)],
-        ["#1d4ed8", "#3b82f6", "#2563eb", "#60a5fa"]
+        ["#1d4ed8", "#3b82f6", "#2563eb", "#60a5fa"],
+        fill_colors,
     ):
         fig3.add_trace(go.Scatter(
             x=x_vals, y=hourly[m],
@@ -482,7 +489,7 @@ elif active == "시간별 변화":
             marker=dict(size=9, color=color,
                         line=dict(color="white", width=2)),
             fill="tozeroy",
-            fillcolor=color + "18",
+            fillcolor=fcolor,
         ), row=r, col=c)
 
     fig3.update_layout(height=480, showlegend=False, **PLOT_BASE)
