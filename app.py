@@ -642,4 +642,6 @@ elif active == "원본 데이터":
 st.markdown(
     "<p class='footer'>서울특별시 환경정책과 &nbsp;|&nbsp; POLY Analyst &nbsp;|&nbsp; 2026.03.19</p>",
     unsafe_allow_html=True
+),
+    unsafe_allow_html=True
 )
